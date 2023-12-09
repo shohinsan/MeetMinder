@@ -1,9 +1,15 @@
 package handlers
 
-type Repository struct{}
+import "shohinsan/MeetMinder/src/dbrepo"
 
-func NewRepository() *Repository {
-	return &Repository{}
+type Repository struct {
+	DB dbrepo.DatabaseRepository
+}
+
+func NewRepository(db dbrepo.DatabaseRepository) *Repository {
+	return &Repository{
+		DB: db,
+	}
 }
 
 var Repo *Repository

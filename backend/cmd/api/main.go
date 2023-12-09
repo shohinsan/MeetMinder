@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"shohinsan/MeetMinder/src/dbrepo"
 	"shohinsan/MeetMinder/src/http/handlers"
 	"shohinsan/MeetMinder/src/http/router"
 
@@ -14,9 +15,12 @@ const PORT = ":8080"
 func main() {
 	godotenv.Load()
 
+	// Set up Database Repository
+	db := dbrepo.NewTestDBRepo()
+
 	// Set up HTTP handlers
 	handlers.NewHandlers(
-		handlers.NewRepository(),
+		handlers.NewRepository(db),
 	)
 
 	// Set up HTTP router
