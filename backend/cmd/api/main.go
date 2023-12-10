@@ -7,6 +7,7 @@ import (
 	"shohinsan/MeetMinder/src/http/handlers"
 	"shohinsan/MeetMinder/src/http/router"
 	"shohinsan/MeetMinder/src/services/hashrepo"
+	"shohinsan/MeetMinder/src/services/tokenrepo"
 
 	"github.com/joho/godotenv"
 )
@@ -22,9 +23,12 @@ func main() {
 	// Set up Hash Repository
 	hr := hashrepo.NewTestHashRepo()
 
+	// Set up Token Repository
+	tr := tokenrepo.NewTestTokenRepo()
+
 	// Set up HTTP handlers
 	handlers.NewHandlers(
-		handlers.NewRepository(db, hr),
+		handlers.NewRepository(db, hr, tr),
 	)
 
 	// Set up HTTP router
