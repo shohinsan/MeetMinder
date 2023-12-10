@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 	"shohinsan/MeetMinder/src/models"
@@ -47,7 +48,7 @@ func (app *Repository) Login(w http.ResponseWriter, r *http.Request) {
 		"username": user.Username,
 	}
 
-	token, err := app.authTokenRepo.CreateToken(payload)
+	token, err := app.AuthTokenRepo.CreateToken(payload)
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Something went wrong", http.StatusInternalServerError)
@@ -109,7 +110,7 @@ func (app *Repository) Register(w http.ResponseWriter, r *http.Request) {
 		"username": user.Username,
 	}
 
-	token, err := app.authTokenRepo.CreateToken(payload)
+	token, err := app.AuthTokenRepo.CreateToken(payload)
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Something went wrong", http.StatusInternalServerError)
@@ -120,4 +121,14 @@ func (app *Repository) Register(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Authorization", "Bearer "+token)
 	w.WriteHeader(http.StatusOK)
+}
+
+func (app *Repository) User(w http.ResponseWriter, r *http.Request) {
+	// get user from context
+	claims := r.Context().Value(ContextKey{}).(map[string]interface{})
+
+	// send user to client
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(claims)
 }

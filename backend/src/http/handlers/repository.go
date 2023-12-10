@@ -10,17 +10,19 @@ import (
 	"shohinsan/MeetMinder/src/services/tokenrepo"
 )
 
+type ContextKey struct{}
+
 type Repository struct {
 	DB            dbrepo.DatabaseRepository
 	hashRepo      hashrepo.HashRepository
-	authTokenRepo tokenrepo.TokenRepository
+	AuthTokenRepo tokenrepo.TokenRepository
 }
 
 func NewRepository(db dbrepo.DatabaseRepository, hr hashrepo.HashRepository, tr tokenrepo.TokenRepository) *Repository {
 	return &Repository{
 		DB:            db,
 		hashRepo:      hr,
-		authTokenRepo: tr,
+		AuthTokenRepo: tr,
 	}
 }
 

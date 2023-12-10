@@ -22,5 +22,9 @@ func (m *testTokenRepo) ParseToken(token string) (map[string]interface{}, error)
 		return nil, errors.New("error parsing token")
 	}
 
-	return nil, nil
+	claims := make(map[string]interface{})
+	claims["id"] = 1
+	claims["username"] = "test"
+
+	return claims, nil
 }
