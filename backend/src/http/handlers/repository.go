@@ -6,15 +6,18 @@ import (
 	"io"
 	"net/http"
 	"shohinsan/MeetMinder/src/dbrepo"
+	"shohinsan/MeetMinder/src/services/hashrepo"
 )
 
 type Repository struct {
-	DB dbrepo.DatabaseRepository
+	DB       dbrepo.DatabaseRepository
+	hashRepo hashrepo.HashRepository
 }
 
-func NewRepository(db dbrepo.DatabaseRepository) *Repository {
+func NewRepository(db dbrepo.DatabaseRepository, hr hashrepo.HashRepository) *Repository {
 	return &Repository{
-		DB: db,
+		DB:       db,
+		hashRepo: hr,
 	}
 }
 
