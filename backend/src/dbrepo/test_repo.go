@@ -12,7 +12,7 @@ func NewTestDBRepo() DatabaseRepository {
 }
 
 func (m *testDBRepo) CreateUser(user *models.User) (*models.User, error) {
-	if user.ID == 0 {
+	if user.Email == "error@test.loc" {
 		return nil, errors.New("invalid user id")
 	}
 	return user, nil

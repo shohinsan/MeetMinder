@@ -11,6 +11,7 @@ func NewRouter() *mux.Router {
 
 	// Set up routes
 	router.HandleFunc("/api/login", handlers.Repo.Login).Methods("POST")
+	router.HandleFunc("/api/register", handlers.Repo.Register).Methods("POST")
 
 	return router
 }
