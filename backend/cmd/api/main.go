@@ -3,11 +3,13 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 	"shohinsan/MeetMinder/src/dbrepo"
 	"shohinsan/MeetMinder/src/http/handlers"
 	"shohinsan/MeetMinder/src/http/router"
 	"shohinsan/MeetMinder/src/services/hashrepo"
 	"shohinsan/MeetMinder/src/services/tokenrepo"
+	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -23,8 +25,17 @@ func main() {
 	// Set up Hash Repository
 	hr := hashrepo.NewTestHashRepo()
 
+	jwtKey := os.Getenv("JWT_KEY")
+	if jwtKey == "" {
+		log.Fatal("JWT_KEY environment variable not set")
+	}
+
 	// Set up Token Repository
-	tr := tokenrepo.NewTestTokenRepo()
+	tr := tokenrepo.NewJWTTokenRepo(
+		"HS256",
+		[]byte(jwtKey),
+		time.Hour*24*7,
+	)
 
 	// Set up HTTP handlers
 	handlers.NewHandlers(
