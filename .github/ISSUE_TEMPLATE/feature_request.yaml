@@ -5,9 +5,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for taking the time to report this issue. Your feedback is crucial in enhancing the quality of our web application. 
+        Thank you for taking the time to report this issue. Your feedback is highly valuable in ensuring the quality of our journal. 
         Please provide the following information to help us address the problem effectively:
-
   - type: dropdown
     attributes:
       label: Priority
@@ -28,5 +27,3 @@ body:
     attributes:
       label: Use case or scenario
       description: Explain how this feature would be beneficial and in what scenarios it would be used.
-      validations:
-        required: true
