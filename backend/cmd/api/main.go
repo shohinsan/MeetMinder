@@ -23,7 +23,7 @@ func main() {
 	db := dbrepo.NewTestDBRepo()
 
 	// Set up Hash Repository
-	hr := hashrepo.NewTestHashRepo()
+	hr := hashrepo.NewBcryptRepo(10)
 
 	jwtKey := os.Getenv("JWT_KEY")
 	if jwtKey == "" {
