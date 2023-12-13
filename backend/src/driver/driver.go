@@ -28,7 +28,7 @@ func ConnectSQL(dsn string) (*DB, error) {
 	}
 
 	if err = db.Ping(); err != nil {
-		return nil, nil
+		return nil, err
 	}
 
 	db.SetMaxOpenConns(maxOpenDBConns)

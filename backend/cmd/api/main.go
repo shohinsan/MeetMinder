@@ -25,13 +25,13 @@ func main() {
 		log.Fatal("DB_CONNECTION environment variable not set")
 	}
 
-	_, err := driver.ConnectSQL(dsn)
+	conn, err := driver.ConnectSQL(dsn)
 	if err != nil {
 		panic(err)
 	}
 
 	// Set up Database Repository
-	db := dbrepo.NewTestDBRepo()
+	db := dbrepo.NewPostgresRepo(conn.SQL)
 
 	// Set up Hash Repository
 	hr := hashrepo.NewBcryptRepo(10)
