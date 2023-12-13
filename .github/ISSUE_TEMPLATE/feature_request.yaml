@@ -1,0 +1,32 @@
+name: Feature Request Template
+description: Suggest a new feature to enhance our web application.
+labels: [feature-request]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report this issue. Your feedback is crucial in enhancing the quality of our web application. 
+        Please provide the following information to help us address the problem effectively:
+
+  - type: dropdown
+    attributes:
+      label: Priority
+      multiple: false
+      options:
+        - Low
+        - Medium
+        - High
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Describe the feature request
+      description: Provide a detailed description of the new feature you are suggesting.
+      validations:
+        required: true
+  - type: textarea
+    attributes:
+      label: Use case or scenario
+      description: Explain how this feature would be beneficial and in what scenarios it would be used.
+      validations:
+        required: true
