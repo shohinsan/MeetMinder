@@ -1,38 +1,32 @@
----
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
+name: Issue Template
+description: Report bugs or grammar errors to help improve our web application.
+labels: [bug, grammar]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report this issue. Your feedback is crucial in enhancing the quality of our web application. 
+        Please provide the following information to help us address the problem effectively:
 
----
+  - type: dropdown
+    attributes:
+      label: What is the type of issue?
+      multiple: false
+      options:
+        - UI/UX
+        - Functionality
+        - Performance
+        - Grammar and Language
+        - Other (Please specify)
+    validations:
+      required: true
+   - type: textarea
+    attributes:
+      label: What is the issue?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Where did you find it?
+      description: If possible, please provide the URL(s) where you found this issue.
 
-**Describe the bug**
-A clear and concise description of what the bug is.
-
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
-
-**Expected behavior**
-A clear and concise description of what you expected to happen.
-
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
-
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
-
-**Additional context**
-Add any other context about the problem here.
