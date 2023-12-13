@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"shohinsan/MeetMinder/src/dbrepo"
+	"shohinsan/MeetMinder/src/driver"
 	"shohinsan/MeetMinder/src/http/handlers"
 	"shohinsan/MeetMinder/src/http/router"
 	"shohinsan/MeetMinder/src/services/hashrepo"
@@ -18,6 +19,16 @@ const PORT = ":8080"
 
 func main() {
 	godotenv.Load()
+
+	dsn := os.Getenv("DB_CONNECTIOn")
+	if dsn == "" {
+		log.Fatal("DB_CONNECTION environment variable not set")
+	}
+
+	_, err := driver.ConnectSQL(dsn)
+	if err != nil {
+		panic(err)
+	}
 
 	// Set up Database Repository
 	db := dbrepo.NewTestDBRepo()
@@ -53,7 +64,7 @@ func main() {
 
 	log.Printf("Starting server on port %s", PORT)
 
-	err := server.ListenAndServe()
+	err = server.ListenAndServe()
 	if err != nil {
 		panic(err)
 	}
