@@ -15,12 +15,10 @@ body:
         - Low
         - Medium
         - High
-      required: true
   - type: textarea
     attributes:
       label: Describe the feature request
       description: Provide a detailed description of the new feature you are suggesting.
-      required: true
   - type: textarea
     attributes:
       label: Use case or scenario
