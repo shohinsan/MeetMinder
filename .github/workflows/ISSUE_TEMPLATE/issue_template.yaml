@@ -1,0 +1,29 @@
+name: Issue Template
+description: Tell us if there is bug or grammar error
+labels: [issues]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report this issue. Your feedback is highly valuable in ensuring the quality of our platform. 
+        Please provide the following information to help us address the problem effectively:
+
+  - type: dropdown
+    attributes:
+      label: What is the type of issue?
+      multiple: true
+      options:
+        - UI/UX
+        - Functionality
+        - Performance
+        - Grammar and Language
+        - Other (Please specify)
+  - type: textarea
+    attributes:
+      label: What is the issue?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Where did you find it?
+      description: If possible, please provide the URL(s) where you found this issue.
