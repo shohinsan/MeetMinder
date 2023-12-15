@@ -11,7 +11,7 @@ const config = {
 			$components: 'src/lib/components',
 			$customTypes: 'src/app.d.ts',
 			$helpers: 'src/helpers',
-			$assets: 'src/assets',
+			$assets: 'src/lib/icons',
 			$fonts: 'src/lib/fonts',
 			$styles: 'src/styles',
 			$blog: 'src/posts',

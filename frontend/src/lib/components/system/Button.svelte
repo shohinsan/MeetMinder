@@ -74,7 +74,7 @@
 
 	const variants = {
 		solid: 'text-white',
-		outline: 'border border-solid border-current transition-colors duration-300 hover:border-red-500',
+		outline: 'border border-solid border-current transition-colors duration-300',
 		text: 'text-current',
 	};
 

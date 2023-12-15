@@ -45,4 +45,4 @@ type Data = {
 type Restrict = Partial<Data>
 
 
-export { NavItem, Window, Document, Data, Restrict };
+export { NavItem, SidebarItem, Window, Document, Data, Restrict };

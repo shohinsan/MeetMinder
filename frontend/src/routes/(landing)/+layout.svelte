@@ -28,5 +28,4 @@
     main {
         min-height: 100vh;
     }
-</style>
-
+</style>``

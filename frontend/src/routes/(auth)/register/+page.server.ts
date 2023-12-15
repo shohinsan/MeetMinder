@@ -82,7 +82,7 @@ export const actions = {
         if (res.ok) {
             const { access_token } = await res.json()
             cookies.set('access_token', access_token, { path: '/' })
-            throw redirect(303, '/');
+            redirect(303, '/');
         }
 
         return fail(400, { msg: "Something went wrong" })
