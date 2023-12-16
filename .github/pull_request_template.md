@@ -15,7 +15,7 @@ This PR optimizes platform's interface, simplifying the submission process and i
 
 <!-- 
 
-Conducting local tests: Compile the LaTeX document using a local TeX distribution 
-and verify that the document compiles without errors and generates the expected output. 
+Conducting local tests: Run the backend server and frontend application locally. 
+Verify that the integration between the backend and frontend functions as expected. 
 
 -->
