@@ -85,3 +85,121 @@ func (m *postgresRepo) GetUserById(id int64) (*models.User, error) {
 
 	return &user, nil
 }
+
+// CreateMeeting implements DatabaseRepository.
+func (m *postgresRepo) CreateMeeting(meeting *models.Meeting) (*models.Meeting, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
+		INSERT INTO meetings (host_id, title, start_time, end_time)
+		VALUES ($1, $2, $3, $4)
+		RETURNING id
+	`
+
+	var newID int64
+
+	err := m.db.QueryRowContext(
+		ctx, query, meeting.HostID, meeting.Title, meeting.StartTime, meeting.EndTime,
+	).Scan(&newID)
+	if err != nil {
+		return nil, err
+	}
+
+	meeting.ID = newID
+
+	return meeting, nil
+}
+
+// DeleteMeeting implements DatabaseRepository.
+func (m *postgresRepo) DeleteMeeting(id int64) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
+		DELETE FROM meetings
+		WHERE id = $1
+	`
+
+	_, err := m.db.ExecContext(ctx, query, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// GetMeetingById implements DatabaseRepository.
+func (m *postgresRepo) GetMeetingById(id int64) (*models.Meeting, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
+		SELECT id, host_id, title, start_time, end_time
+		FROM meetings
+		WHERE id = $1
+	`
+
+	row := m.db.QueryRowContext(ctx, query, id)
+
+	var meeting models.Meeting
+
+	if err := row.Scan(&meeting.ID, &meeting.HostID, &meeting.Title, &meeting.StartTime, &meeting.EndTime); err != nil {
+		return nil, err
+	}
+
+	return &meeting, nil
+}
+
+// GetMeetingsForUser implements DatabaseRepository.
+func (m *postgresRepo) GetMeetingsForUser(userId int64) ([]*models.Meeting, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
+		SELECT id, host_id, title, start_time, end_time
+		FROM meetings
+		WHERE host_id = $1
+	`
+
+	rows, err := m.db.QueryContext(ctx, query, userId)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var meetings []*models.Meeting
+
+	for rows.Next() {
+		var meeting models.Meeting
+		if err := rows.Scan(&meeting.ID, &meeting.HostID, &meeting.Title, &meeting.StartTime, &meeting.EndTime); err != nil {
+			return nil, err
+		}
+		meetings = append(meetings, &meeting)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return meetings, nil
+}
+
+// UpdateMeeting implements DatabaseRepository.
+func (m *postgresRepo) UpdateMeeting(meeting *models.Meeting) (*models.Meeting, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
+		UPDATE meetings
+		SET title = $1, start_time = $2, end_time = $3
+		WHERE id = $4
+	`
+
+	_, err := m.db.ExecContext(ctx, query, meeting.Title, meeting.StartTime, meeting.EndTime, meeting.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return meeting, nil
+}
