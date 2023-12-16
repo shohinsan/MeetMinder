@@ -4,14 +4,14 @@
 
 <!--
 
-This PR optimizes the writing platform's interface, simplifying the submission process and integrating an automated proofreading feature, which enhances the overall experience for writers and authors.
+This PR optimizes platform's interface, simplifying the submission process and integrating an automated proofreading feature, which enhances the overall experience for coders.
 
 -->
 
-- [ ] Adds new chapter/section
-- [ ] Manuscript changes
+- [ ] Adds new feature
+- [ ] Code changes
 
-### How did you verify your manuscript works?
+### How did you verify your code works?
 
 <!-- 
 
