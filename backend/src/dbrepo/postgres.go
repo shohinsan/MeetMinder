@@ -23,14 +23,17 @@ func (m *postgresRepo) CreateUser(user *models.User) (*models.User, error) {
 	defer cancel()
 
 	query := `
-		INSERT INTO users (email, username, password_hash)
-		VALUES ($1, $2, $3)
+		INSERT INTO users (email, username, first_name, last_name, password_hash)
+		VALUES ($1, $2, $3, $4, $5)
 		RETURNING id
 	`
 
 	var newID int64
 
-	if err := m.db.QueryRowContext(ctx, query, user.Email, user.Username, user.Password).Scan(&newID); err != nil {
+	err := m.db.QueryRowContext(
+		ctx, query, user.Email, user.Username, user.FirstName, user.LastName, user.Password,
+	).Scan(&newID)
+	if err != nil {
 		return nil, err
 	}
 
@@ -45,7 +48,7 @@ func (m *postgresRepo) GetUserByEmail(email string) (*models.User, error) {
 	defer cancel()
 
 	query := `
-		SELECT id, email, username, password_hash
+		SELECT id, email, username, first_name, last_name, password_hash
 		FROM users
 		WHERE email = $1
 	`
@@ -67,7 +70,7 @@ func (m *postgresRepo) GetUserById(id int64) (*models.User, error) {
 	defer cancel()
 
 	query := `
-		SELECT id, email, username, password_hash
+		SELECT id, email, username, first_name, last_name, password_hash
 		FROM users
 		WHERE id = $1
 	`

@@ -64,9 +64,11 @@ func (app *Repository) Login(w http.ResponseWriter, r *http.Request) {
 func (app *Repository) Register(w http.ResponseWriter, r *http.Request) {
 	// create request body struct
 	body := struct {
-		Email    string `json:"email"`
-		Username string `json:"username"`
-		Password string `json:"password"`
+		Email     string `json:"email"`
+		Username  string `json:"username"`
+		FirstName string `json:"first_name"`
+		LastName  string `json:"last_name"`
+		Password  string `json:"password"`
 	}{}
 
 	defer r.Body.Close()
@@ -76,8 +78,8 @@ func (app *Repository) Register(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: Implement input validation
 	// validate request body
-	if body.Email == "" || body.Username == "" || body.Password == "" {
-		http.Error(w, "Invalid email, username, or password", http.StatusBadRequest)
+	if body.Email == "" || body.Username == "" || body.FirstName == "" || body.LastName == "" || body.Password == "" {
+		http.Error(w, "Invalid email, username, first name, last name, or password", http.StatusBadRequest)
 		return
 	}
 
@@ -91,9 +93,11 @@ func (app *Repository) Register(w http.ResponseWriter, r *http.Request) {
 
 	// create user
 	user := &models.User{
-		Email:    body.Email,
-		Username: body.Username,
-		Password: hash,
+		Email:     body.Email,
+		Username:  body.Username,
+		FirstName: body.FirstName,
+		LastName:  body.LastName,
+		Password:  hash,
 	}
 
 	// save user to database
@@ -106,8 +110,10 @@ func (app *Repository) Register(w http.ResponseWriter, r *http.Request) {
 
 	// Create auth token
 	payload := map[string]interface{}{
-		"id":       user.ID,
-		"username": user.Username,
+		"id":         user.ID,
+		"username":   user.Username,
+		"first_name": user.FirstName,
+		"last_name":  user.LastName,
 	}
 
 	token, err := app.AuthTokenRepo.CreateToken(payload)

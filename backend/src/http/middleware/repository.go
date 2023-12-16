@@ -31,8 +31,6 @@ func (m *MiddlewareRepository) RequiresAuthentication(next http.Handler) http.Ha
 			return
 		}
 
-		claims["token"] = tokenStr
-
 		ctx := context.WithValue(r.Context(), handlers.ContextKey{}, claims)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
