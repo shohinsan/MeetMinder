@@ -15,6 +15,7 @@ create table users (
 create table meetings (
 	id SERIAL primary key,
 	title VARCHAR(255) not null,
+    description VARCHAR(255) not null,
 	host_id INTEGER not null,
 	creator_id INTEGER not null,
 	start_time TIMESTAMP not null,

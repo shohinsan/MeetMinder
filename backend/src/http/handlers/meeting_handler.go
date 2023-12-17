@@ -23,9 +23,14 @@ func (app *Repository) CreateMeeting(w http.ResponseWriter, r *http.Request) {
 	// decode request body into struct
 	decodeRequestJSON(w, r, &body)
 
-	hostUsername := mux.Vars(r)["username"]
+	// validate request body
+	if body.Title == "" || body.StartTime.IsZero() || body.EndTime.IsZero() {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
 
 	// get host id
+	hostUsername := mux.Vars(r)["username"]
 	host, err := app.DB.GetUserByUsername(hostUsername)
 	if err != nil {
 		log.Println(err)
@@ -33,6 +38,7 @@ func (app *Repository) CreateMeeting(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// get authenticated user's username
 	claims := r.Context().Value(ContextKey{}).(map[string]interface{})
 	creatorUsername := claims["username"].(string)
 
@@ -57,11 +63,12 @@ func (app *Repository) CreateMeeting(w http.ResponseWriter, r *http.Request) {
 
 	// create meeting
 	meeting := &models.Meeting{
-		Title:     body.Title,
-		HostID:    host.ID,
-		CreatorID: user.ID,
-		StartTime: body.StartTime,
-		EndTime:   body.EndTime,
+		Title:       body.Title,
+		Description: body.Description,
+		HostID:      host.ID,
+		CreatorID:   user.ID,
+		StartTime:   body.StartTime,
+		EndTime:     body.EndTime,
 	}
 
 	// save meeting to database

@@ -12,10 +12,11 @@ type User struct {
 }
 
 type Meeting struct {
-	ID        int64     `json:"id"`
-	HostID    int64     `json:"host_id"`
-	CreatorID int64     `json:"creator_id"`
-	Title     string    `json:"title"`
-	StartTime time.Time `json:"start_time"`
-	EndTime   time.Time `json:"end_time"`
+	ID          int64     `json:"id"`
+	HostID      int64     `json:"host_id"`
+	CreatorID   int64     `json:"creator_id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	StartTime   time.Time `json:"start_time"`
+	EndTime     time.Time `json:"end_time"`
 }

@@ -114,15 +114,15 @@ func (m *postgresRepo) CreateMeeting(meeting *models.Meeting) (*models.Meeting, 
 	defer cancel()
 
 	query := `
-		INSERT INTO meetings (host_id, creator_id, title, start_time, end_time)
-		VALUES ($1, $2, $3, $4, $5)
+		INSERT INTO meetings (host_id, creator_id, title, description, start_time, end_time)
+		VALUES ($1, $2, $3, $4, $5, $6)
 		RETURNING id
 	`
 
 	var newID int64
 
 	err := m.db.QueryRowContext(
-		ctx, query, meeting.HostID, meeting.CreatorID, meeting.Title, meeting.StartTime, meeting.EndTime,
+		ctx, query, meeting.HostID, meeting.CreatorID, meeting.Title, meeting.Description, meeting.StartTime, meeting.EndTime,
 	).Scan(&newID)
 	if err != nil {
 		return nil, err
@@ -157,7 +157,7 @@ func (m *postgresRepo) GetMeetingById(id int64) (*models.Meeting, error) {
 	defer cancel()
 
 	query := `
-		SELECT id, host_id, title, start_time, end_time
+		SELECT id, host_id, creator_id, title, descrtiption, start_time, end_time
 		FROM meetings
 		WHERE id = $1
 	`
@@ -166,7 +166,9 @@ func (m *postgresRepo) GetMeetingById(id int64) (*models.Meeting, error) {
 
 	var meeting models.Meeting
 
-	if err := row.Scan(&meeting.ID, &meeting.HostID, &meeting.Title, &meeting.StartTime, &meeting.EndTime); err != nil {
+	if err := row.Scan(
+		&meeting.ID, &meeting.HostID, &meeting.CreatorID, &meeting.Title, &meeting.Description, &meeting.StartTime, &meeting.EndTime,
+	); err != nil {
 		return nil, err
 	}
 
@@ -179,7 +181,7 @@ func (m *postgresRepo) GetMeetingsForUser(userId int64) ([]*models.Meeting, erro
 	defer cancel()
 
 	query := `
-		SELECT id, host_id, title, start_time, end_time
+		SELECT id, host_id, creator_id, title, description, start_time, end_time
 		FROM meetings
 		WHERE host_id = $1
 	`
@@ -194,7 +196,9 @@ func (m *postgresRepo) GetMeetingsForUser(userId int64) ([]*models.Meeting, erro
 
 	for rows.Next() {
 		var meeting models.Meeting
-		if err := rows.Scan(&meeting.ID, &meeting.HostID, &meeting.Title, &meeting.StartTime, &meeting.EndTime); err != nil {
+		if err := rows.Scan(
+			&meeting.ID, &meeting.HostID, &meeting.CreatorID, &meeting.Title, &meeting.Description, &meeting.StartTime, &meeting.EndTime,
+		); err != nil {
 			return nil, err
 		}
 		meetings = append(meetings, &meeting)
@@ -214,11 +218,11 @@ func (m *postgresRepo) UpdateMeeting(meeting *models.Meeting) (*models.Meeting, 
 
 	query := `
 		UPDATE meetings
-		SET title = $1, start_time = $2, end_time = $3
-		WHERE id = $4
+		SET title = $1, description = $2, start_time = $3, end_time = $4
+		WHERE id = $5
 	`
 
-	_, err := m.db.ExecContext(ctx, query, meeting.Title, meeting.StartTime, meeting.EndTime, meeting.ID)
+	_, err := m.db.ExecContext(ctx, query, meeting.Title, meeting.Description, meeting.StartTime, meeting.EndTime, meeting.ID)
 	if err != nil {
 		return nil, err
 	}
