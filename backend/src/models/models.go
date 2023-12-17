@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 type User struct {
 	ID        int64  `json:"id"`
 	Email     string `json:"email"`
@@ -10,9 +12,10 @@ type User struct {
 }
 
 type Meeting struct {
-	ID        int64  `json:"id"`
-	HostID    int64  `json:"host_id"`
-	Title     string `json:"title"`
-	StartTime string `json:"start_time"`
-	EndTime   string `json:"end_time"`
+	ID        int64     `json:"id"`
+	HostID    int64     `json:"host_id"`
+	CreatorID int64     `json:"creator_id"`
+	Title     string    `json:"title"`
+	StartTime time.Time `json:"start_time"`
+	EndTime   time.Time `json:"end_time"`
 }

@@ -12,6 +12,9 @@ type DatabaseRepository interface {
 	// Get a user by id, returns the user or an error
 	GetUserById(id int64) (*models.User, error)
 
+	// Get a user by username, returns the user or an error
+	GetUserByUsername(username string) (*models.User, error)
+
 	// Create a new meeting, returns the new meeting or an error
 	CreateMeeting(meeting *models.Meeting) (*models.Meeting, error)
 

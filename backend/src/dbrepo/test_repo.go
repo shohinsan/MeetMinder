@@ -34,6 +34,14 @@ func (m *testDBRepo) GetUserById(id int64) (*models.User, error) {
 	return &models.User{}, nil
 }
 
+func (m *testDBRepo) GetUserByUsername(username string) (*models.User, error) {
+	if username == "" {
+		return nil, errors.New("invalid username")
+	}
+
+	return &models.User{}, nil
+}
+
 // CreateMeeting implements DatabaseRepository.
 func (*testDBRepo) CreateMeeting(meeting *models.Meeting) (*models.Meeting, error) {
 	panic("unimplemented")

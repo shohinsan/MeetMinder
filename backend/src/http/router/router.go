@@ -19,7 +19,11 @@ func NewRouter() *mux.Router {
 
 	// Set up protected routes
 	s := r.PathPrefix("/api").Subrouter()
+
 	s.HandleFunc("/user", handlers.Repo.User).Methods("GET")
+
+	s.HandleFunc("/user/{username}/meetings", handlers.Repo.CreateMeeting).Methods("POST")
+
 	s.Use(mr.RequiresAuthentication)
 
 	return r

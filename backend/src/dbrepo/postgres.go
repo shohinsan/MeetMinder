@@ -86,21 +86,43 @@ func (m *postgresRepo) GetUserById(id int64) (*models.User, error) {
 	return &user, nil
 }
 
+// GetUserByUsername implements DatabaseRepository.
+func (m *postgresRepo) GetUserByUsername(username string) (*models.User, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
+		SELECT id, email, username, first_name, last_name, password_hash
+		FROM users
+		WHERE username = $1
+	`
+
+	row := m.db.QueryRowContext(ctx, query, username)
+
+	var user models.User
+
+	if err := row.Scan(&user.ID, &user.Email, &user.Username, &user.FirstName, &user.LastName, &user.Password); err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
+
 // CreateMeeting implements DatabaseRepository.
 func (m *postgresRepo) CreateMeeting(meeting *models.Meeting) (*models.Meeting, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	query := `
-		INSERT INTO meetings (host_id, title, start_time, end_time)
-		VALUES ($1, $2, $3, $4)
+		INSERT INTO meetings (host_id, creator_id, title, start_time, end_time)
+		VALUES ($1, $2, $3, $4, $5)
 		RETURNING id
 	`
 
 	var newID int64
 
 	err := m.db.QueryRowContext(
-		ctx, query, meeting.HostID, meeting.Title, meeting.StartTime, meeting.EndTime,
+		ctx, query, meeting.HostID, meeting.CreatorID, meeting.Title, meeting.StartTime, meeting.EndTime,
 	).Scan(&newID)
 	if err != nil {
 		return nil, err
