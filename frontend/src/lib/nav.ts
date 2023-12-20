@@ -8,6 +8,7 @@ interface NavigationConfig {
     dropdownNavigation: NavItem[];
     dropdownLogout: NavItem[];
     mobileNavigation: NavItem[];
+    settingsNavigation: NavItem[];
 }
 
 export const config: NavigationConfig = {
@@ -61,5 +62,10 @@ export const config: NavigationConfig = {
         { name: 'Scheduled', href: 'scheduled' },
         { name: 'Availability', href: 'availability' },
         { name: 'Settings', href: 'settings' },
-    ]
+    ],
+    settingsNavigation: [
+        { name: 'Account', href: 'settings' },
+        { name: 'Billing', href: 'billing' },
+        { name: 'Integrations', href: 'integrations' },
+    ],
 };

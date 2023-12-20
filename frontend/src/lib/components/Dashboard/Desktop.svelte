@@ -12,6 +12,9 @@
 	let menuClose = (): void => {
 		dropdown = false;
 	};
+
+	let basePath = "/app/";
+
 </script>
 
 <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
@@ -26,10 +29,10 @@
 				<li>
 					<ul role="list" class="-mx-2 space-y-1">
 						{#each config.sidebarTopNavigation as { name, href } (name)}
-							<li aria-current={$page.url.pathname === href ? 'page' : undefined}>
+							<li aria-current={$page.url.pathname === `${basePath}${href}` ? 'page' : undefined}>
 								<a
-									{href}
-									class={$page.url.pathname === `/app/${href}`
+									href={`${basePath}${href}`}
+									class={$page.url.pathname === `${basePath}${href}`
 										? ' text-indigo-600 bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
 										: 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'}
 								>
@@ -44,10 +47,10 @@
 						<div class="text-xs font-semibold leading-6 text-gray-400">{header}</div>
 						<ul role="list" class="-mx-2 mt-2 space-y-1">
 							{#each items as { name, href } (name)}
-								<li aria-current={$page.url.pathname === href ? 'page' : undefined}>
+								<li aria-current={$page.url.pathname === `${basePath}${href}` ? 'page' : undefined}>
 									<a
-										{href}
-										class={$page.url.pathname === `/app/${href}`
+										href={`${basePath}${href}`}
+										class={$page.url.pathname === `${basePath}${href}`
 											? ' text-indigo-600 bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
 											: 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'}
 									>
@@ -61,10 +64,10 @@
 				<li class="mt-auto">
 					<ul role="list" class="-mx-2 mt-2 space-y-1">
 						{#each config.sidebarBottomNavigation as { name, href } (name)}
-							<li aria-current={$page.url.pathname === href ? 'page' : undefined}>
+							<li aria-current={$page.url.pathname === `${basePath}${href}` ? 'page' : undefined}>
 								<a
-									{href}
-									class={$page.url.pathname === `/app/${href}`
+									href={`${basePath}${href}`}
+									class={$page.url.pathname === `${basePath}${href}`
 										? ' text-indigo-600 bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
 										: 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'}
 								>
