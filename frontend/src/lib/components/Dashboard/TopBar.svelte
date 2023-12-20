@@ -70,7 +70,9 @@
 							{#each config.dropdownNavigation as { name, href }, index (index)}
 								<a
 									on:click={menuClose}
-									{href}
+									href={`/app/${href === 'settings' ? '' : 'settings/'}${
+										href === 'settings' ? '' : ''
+									}${href}`}
 									class={$page.url.pathname === `/app/${href}`
 										? ' text-indigo-600 bg-gray-50 group flex gap-x-3 px-4 py-2 text-sm leading-6 font-semibold'
 										: 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex px-4 py-2 gap-x-3  text-sm leading-6 font-semibold'}
