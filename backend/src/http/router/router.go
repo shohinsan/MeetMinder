@@ -23,6 +23,7 @@ func NewRouter() *mux.Router {
 	s.HandleFunc("/user", handlers.Repo.User).Methods("GET")
 
 	s.HandleFunc("/user/{username}/meetings", handlers.Repo.CreateMeeting).Methods("POST")
+	s.HandleFunc("/meetings", handlers.Repo.GetUserMeetings).Methods("GET")
 
 	s.Use(mr.RequiresAuthentication)
 

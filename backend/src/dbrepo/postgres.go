@@ -183,7 +183,7 @@ func (m *postgresRepo) GetMeetingsForUser(userId int64) ([]*models.Meeting, erro
 	query := `
 		SELECT id, host_id, creator_id, title, description, start_time, end_time
 		FROM meetings
-		WHERE host_id = $1
+		WHERE host_id = $1 OR creator_id = $1
 	`
 
 	rows, err := m.db.QueryContext(ctx, query, userId)

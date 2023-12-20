@@ -83,3 +83,18 @@ func (app *Repository) CreateMeeting(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(meeting)
 }
+
+func (app *Repository) GetUserMeetings(w http.ResponseWriter, r *http.Request) {
+	claims := r.Context().Value(ContextKey{}).(map[string]interface{})
+	userID := int64(claims["id"].(float64))
+
+	meetings, err := app.DB.GetMeetingsForUser(userID)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Something went wrong", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(meetings)
+}
