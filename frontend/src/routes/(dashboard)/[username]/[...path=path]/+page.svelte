@@ -39,13 +39,14 @@
 
         <div class="flex flex-wrap gap-4 lg:ml-10 justify-center md:justify-start">
             {#each cards as card (card.title)}
-                <div class="p-4 w-[300px] bg-gray-100 shadow-md rounded-md m-4">
+            <a href={`/${username}/${encodeURIComponent(card.title.replace(/\s+/g, '-').toLowerCase())}?`}>    
+            <div class="p-4 w-[300px] bg-gray-100 shadow-md rounded-md m-4">
                     <h2 class="text-2xl font-semibold mb-4 flex items-center justify-between">
                         <div class="flex items-center"> <!-- Wrap the icon and title in a flex container -->
                             <div class="rounded-full bg-amber-500 h-4 w-4 mr-2"></div> <!-- Add margin to the icon -->
-                            <a href={`/${username}/${encodeURIComponent(card.title.replace(/\s+/g, '-').toLowerCase())}?`}>
+                           
                                 <span>{card.title}</span>
-                            </a>
+                          
                             <!-- Use a span for the title to keep it inline with the icon -->
                         </div>
 
@@ -56,6 +57,7 @@
 
                     <p class="text-gray-600">{card.description}</p>
                 </div>
+            </a>
             {/each}
         </div>
     </div>
